@@ -1,14 +1,15 @@
 import React from 'react';
 import {
     NavItem,
-    NavLink,
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
 const NavbarNavItem = (props) => {
+    const isActive = window.location.pathname === props.href;
+    const classList = `nav-link ${isActive ? 'active' : ''}`
     return (
         <NavItem>
-            <Link to={props.href}>{props.text}</Link>
+            <Link className={classList}  to={props.href}>{props.text}</Link>
         </NavItem>
     )
 } 

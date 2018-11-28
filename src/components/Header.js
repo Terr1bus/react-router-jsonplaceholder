@@ -5,15 +5,15 @@ import {
     Nav,
     NavbarBrand,
 } from 'reactstrap';
-import { Router } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Header = () => (
     <Navbar>
-        <NavbarBrand href="#">Project name</NavbarBrand>
+        <Link className="navbar-brand" to="/">Project name</Link>
         <Nav pills>
-            <NavbarNavItem active={true} href="/" text="Home" />
-            <NavbarNavItem active={false} href="/about" text="About" />
-            <NavbarNavItem active={false} href="/contacts" text="Contacts" />
+            <NavbarNavItem href="/" text="Home" />
+            <NavbarNavItem href="/about" text="About" />
+            <NavbarNavItem href="/contacts" text="Contacts" />
             </Nav>
     </Navbar>
 )

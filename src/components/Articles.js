@@ -1,6 +1,25 @@
 import React from 'react';
-import Article from './Article';
-import { Row } from 'reactstrap';
+// import Article from './Article';
+import { 
+    Row,
+    Col,
+ } from 'reactstrap';
+ import { Link } from 'react-router-dom';
+
+const Article = (props) => {
+    // console.log(this);
+    return (
+        <Col md={4} className="text-center">
+            <Link to={props.id}><h3>{props.title}</h3></Link>
+            <p>{props.body}</p>
+        </Col>
+    )
+}
+
+Article.defaultProps = {
+    title: "Article title",
+    body: "Article text"
+}
 
 class Articles extends React.Component {
     render() {
