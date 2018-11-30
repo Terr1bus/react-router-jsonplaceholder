@@ -1,16 +1,22 @@
 import React from 'react';
 import { 
     Col,
+    Row,
  } from 'reactstrap';
  import { Route, Link } from 'react-router-dom';
 
 const PostShort = (props) => {
     // console.log(props);
+    let className = `text-center `;
+    if (props.className) {
+        className += props.className;
+    }
+
     return (
-        <Col md={4} className="text-center">
+        <main className={className}>
             <Link to={`/posts/${props.id}`}><h4>{props.title}</h4></Link>
             <p>{props.body}</p>
-        </Col>
+        </main>
     )
 }
 

@@ -1,4 +1,5 @@
 const path = require('path');
+const babelRuntime = require('@babel/plugin-transform-runtime')
 
 module.exports = {
     mode: "development",
@@ -24,8 +25,9 @@ module.exports = {
                     presets: [
                         '@babel/env',
                         '@babel/react'
-                    ]
-                }
+                    ],
+                    plugins: ['@babel/plugin-transform-runtime']
+                },
             },
             {
                 test: /\.css$/,
