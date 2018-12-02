@@ -8,12 +8,12 @@ const Posts = (props) => {
             <PostShort className="col-md-4" {...post} key={index}/>
         ))
         return (
-            <>
+            <React.Fragment>
                 <Link to="/posts"><h2 className="text-center">Latest posts</h2></Link>
                 <Row>
                     {posts}
                 </Row>
-            </>
+            </React.Fragment>
         )
     }
 

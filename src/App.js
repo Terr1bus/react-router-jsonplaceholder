@@ -4,7 +4,7 @@ import Header from './components/Header';
 import Home from './pages/Home';
 import About from './pages/About';
 import Contacts from './pages/Contacts';
-import Posts from './pages/Posts';
+import LatestPosts from './pages/LatestPosts';
 import Post from './pages/Post';
 import User from './pages/User';
 import PageNotFound from './pages/PageNotFound';
@@ -50,7 +50,7 @@ class App extends React.Component {
                     />
                     <Route path="/about" component={About} />
                     <Route path="/contacts" component={Contacts} />
-                    <Route exact path="/posts" component={Posts} />
+                    <Route exact path="/posts" component={LatestPosts} />
                     <Route path="/posts/:postId" component={Post} />
                     <Route path="/user/:userId" component={User} />
                     <hr />

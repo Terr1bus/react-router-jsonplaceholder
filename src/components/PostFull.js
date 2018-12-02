@@ -5,54 +5,44 @@ import {
  } from 'reactstrap';
  import { Route, Link } from 'react-router-dom';
  import dataAPI from '../middleware/dataAPI';
- import Comment from '../components/Comment';
 
 class PostFull extends React.Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-            user: {},
-            comments: [],
-        }
-        
-        dataAPI.getUser(this.props.userId)
-            .then(user => {
-                this.setState({
-                    user,
-                })
-        })
-
-        dataAPI.getPostComments(this.props.id)
-            .then(comments => {
-                this.setState({
-                    comments,
-                })
-            })
-
     }
     
     render() {
         // console.log(this);
 
-        const className = 'text-center ';
+        let className = 'text-center mb-3 ';
         if (this.props.className) {
             className += this.props.className;
         }
 
+        let result;
+        if (/*this.state.isLoaded*/ true) {
+            result = (
+                <main className={className}>
+                    <Link to={`/posts/${this.props.post.id}`}><h4>{this.props.post.title}</h4></Link>
+                    <p>{this.props.post.body}</p>
+                    <Row>
+                        <Col md={{size: 2}}>
+                            <Link to={`/user/${this.props.post.userId}`}>{this.props.user.name}</Link>
+                        </Col>
+                        <Col md={{size: 2, offset: 8}}>
+                            <p>Comments: {this.props.commentsCount}</p>
+                        </Col>
+                    </Row>
+                </main>
+            )
+        } else {
+            result = <h1>Post loading...</h1>
+        }
+
         return (
-            <main className={className}>
-                <Link to={`/posts/${this.props.id}`}><h4>{this.props.title}</h4></Link>
-                <p>{this.props.body}</p>
-                <Row>
-                    <Col md={{size: 2}}>
-                        <Link to={`/user/${this.props.userId}`}>{this.state.user.name}</Link>
-                    </Col>
-                    <Col md={{size: 2, offset: 8}}>
-                        <p>Comments: {this.state.comments.length}</p>
-                    </Col>
-                </Row>
-            </main>
+            <React.Fragment>
+                {result}
+            </React.Fragment>
         )
     }
 }

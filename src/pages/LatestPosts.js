@@ -1,5 +1,6 @@
 import React from 'react';
 import PostFull from '../components/PostFull';
+import PostShort from '../components/PostShort';
 import dataAPI from '../middleware/dataAPI';
 
 class Posts extends React.Component {
@@ -26,18 +27,19 @@ class Posts extends React.Component {
 
     render() {
         // console.log(this.state.posts);
-        var result;
+        let result;
         if (this.state.isLoaded && !this.state.error) {
             result = this.state.posts.map( post => (
-                <PostFull key={post.id} {...post}/>
+                <PostShort key={post.id} {...post}/>
             ))
         } else {
             result = <h1>Loading...</h1>;
         }
         return (
-            <>
+            <React.Fragment>
+                <h1 className="mb-5 text-center">Latest posts</h1>
                 {result}
-            </>
+            </React.Fragment>
         )
     }
 }

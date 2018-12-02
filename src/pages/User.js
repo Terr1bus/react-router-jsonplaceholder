@@ -9,6 +9,8 @@ class User extends React.Component {
 
         this.state = {
             userPosts: [],
+            user: {},
+            isLoaded: false,
         }
 
         // console.log(this);
@@ -16,23 +18,42 @@ class User extends React.Component {
         dataAPI.getPostByUser(this.props.match.params.userId)
             .then(userPosts => {
                 // let userPosts = posts.filter(post => (this.props.match.params.userId == post.userId))
-                this.setState({userPosts});
+                this.setState({
+                    userPosts,
+                    isLoaded: (this.state.userPosts && this.state.user) ? true : false,
+                });
             })
+        
+        dataAPI.getUser(this.props.match.params.userId)
+            .then(user => this.setState({
+                user,
+                isLoaded: (this.state.userPosts && this.state.user) ? true : false,
+            }))
 
     }
 
     render() {
-        var result;
-        result = this.state.userPosts.map(post => (
+        let result;
+        const userPosts = this.state.userPosts.map(post => (
             <Col key={post.id}>
                 <PostShort {...post} />
                 <hr />
             </Col>
         ))
+        if (this.state.isLoaded) {
+            result = (
+                <React.Fragment>
+                    <h1 className="text-center mb-5">Posts by user {this.state.user.name}</h1>
+                    {userPosts}
+                </React.Fragment>
+            )
+        } else {
+            result = <h1>Loading...</h1>
+        }
         return(
-            <>
+            <React.Fragment>
                 {result}
-            </>
+            </React.Fragment>
         )
     }
 }

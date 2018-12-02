@@ -7,7 +7,7 @@ import {
 
 const PostShort = (props) => {
     // console.log(props);
-    let className = `text-center `;
+    let className = `text-center mb-3 `;
     if (props.className) {
         className += props.className;
     }

@@ -1,4 +1,7 @@
 import React from 'react';
+import {
+    Col
+} from 'reactstrap';
 import dataAPI from '../middleware/dataAPI';
 
 class Comment extends React.Component {
@@ -16,8 +19,15 @@ class Comment extends React.Component {
     }
 
     render() {
+        // console.log(this);
         return(
-            <h1>{this.props}</h1>
+            <main className="mb-3">
+                <h4>{this.props.name}</h4>
+                <p>{this.props.body}</p>
+                <Col md={{size: 2, offset: 10}}>
+                    {this.props.email}
+                </Col>
+            </main>
         )
     }
 }

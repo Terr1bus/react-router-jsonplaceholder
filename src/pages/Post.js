@@ -13,53 +13,65 @@ class Post extends React.Component {
         super(props);
         this.state = {
             post: {},
-            // users: [],
+            postOwner: {},
             comments: [],
-            isLoading: false,
+            isLoaded: false,
             error: null,
         }
 
         dataAPI.getPost(this.props.match.params.postId)
             .catch(error => this.setState({error}))
-            .then(post => this.setState({
-                post,
-                isLoading: !!this.state.post && !!this.state.comments,
-            }))
+            .then(post => {
+                this.setState({
+                    post,
+                    isLoaded: (this.state.post && this.state.comments && this.state.postOwner) ? true : false,
+                });
+                return post;
+            })
+            .then(post => dataAPI.getUser(post.userId))
+            .then(postOwner => this.setState({
+                postOwner,
+                isLoaded: (this.state.post && this.state.comments && this.state.postOwner) ? true : false,
+            }));
 
         dataAPI.getPostComments(this.props.match.params.postId)
             .then(comments => {
-                // console.log(comments);
                 this.setState({
                     comments,
-                    isLoading: !!this.state.post && !!this.state.comments,
-                })
+                    isLoaded: (this.state.post && this.state.comments && this.state.postOwner) ? true : false,
+                });
             })
+    }
 
-        }
     render() {
-        // console.log(this);
+        // console.log(this.state.postOwner);
         
         const comments = this.state.comments.map(comment => (
             <Comment {...comment} key={comment.id} />
         ));
 
-        var result;
-        if (this.state.isLoading) {
+        let result;
+        if (this.state.isLoaded) {
             result = (
-                <>
-                    <PostFull {...this.state.post} />
+                <React.Fragment>
+                    <PostFull 
+                        post={this.state.post} 
+                        commentsCount={this.state.comments.length}
+                        user={this.state.postOwner}
+                    />
+                    <hr />
                     {comments}
-                </>
+                </React.Fragment>
             )
         } else if (this.state.error) {
-            result = <>{JSON.stringify(this.state.error)}</>
+            result = <React.Fragment>{JSON.stringify(this.state.error)}</React.Fragment>
         } else {
-            result = <h1>Loading...</h1>
+            result = <h1>Post page loading...</h1>
         }
         return (
-            <>
+            <React.Fragment>
                 {result}
-            </>
+            </React.Fragment>
         )
     }
 }
